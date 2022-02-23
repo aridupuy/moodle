@@ -62,6 +62,6 @@
             "@permDir"
          ],
         "createDir": "mkdir ./moodledata",
-        "createDir": "chmod -R 777 moodledata"
+        "permDir": "chmod -R 777 moodledata"
         }
 }
