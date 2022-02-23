@@ -2,7 +2,6 @@
     "name": "moodle/moodle",
     "license": "GPL-3.0-or-later",
     "description": "Moodle - the world's open source learning platform",
-    "type": "project",
     "homepage": "https://moodle.org",
     "repositories": [
         {
@@ -59,7 +58,7 @@
     },
      "scripts": {
          "test": [
-            "@createDir"
+            "@createDir",
             "@permDir"
          ],
         "createDir": "mkdir ./moodledata",
