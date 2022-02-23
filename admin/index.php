@@ -22,6 +22,7 @@
  * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+ini_set('max_input_vars', 7000);
 
 // Check that config.php exists, if not then call the install script
 if (!file_exists('../config.php')) {
