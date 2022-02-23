@@ -56,5 +56,12 @@
         "ext-xmlrpc": "Enabling XMLRPC PHP extension is useful for web services and Moodle networking.",
         "ext-soap": "Enabling SOAP PHP extension is useful for web services and some plugins.",
         "ext-sodium": "Enabling Sodium PHP extension is recommended, it is used by Moodle encryption API."
-    }
+    },
+     "scripts": {
+         "compile": [
+            "rm config.php",
+            "mdkir moodledata*",
+            "chmod -R 777 moodledata",
+        ]
+  }
 }
