@@ -1,0 +1,70 @@
+[debug] [2022-02-23T04:10:14.543Z] ----------------------------------------------------------------------
+[debug] [2022-02-23T04:10:14.545Z] Command:       /usr/bin/node /usr/bin/firebase deploy
+[debug] [2022-02-23T04:10:14.545Z] CLI Version:   10.2.1
+[debug] [2022-02-23T04:10:14.545Z] Platform:      linux
+[debug] [2022-02-23T04:10:14.545Z] Node Version:  v14.19.0
+[debug] [2022-02-23T04:10:14.546Z] Time:          Wed Feb 23 2022 01:10:14 GMT-0300 (hora estándar de Argentina)
+[debug] [2022-02-23T04:10:14.546Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-02-23T04:10:14.609Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-02-23T04:10:14.609Z] > authorizing via signed-in user (ariwodeva@gmail.com)
+[debug] [2022-02-23T04:10:14.609Z] [iam] checking project test-66d83 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-02-23T04:10:14.611Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/test-66d83:testIamPermissions [none]
+[debug] [2022-02-23T04:10:14.611Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/test-66d83:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-02-23T04:10:15.466Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/test-66d83:testIamPermissions 200
+[debug] [2022-02-23T04:10:15.466Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/test-66d83:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-02-23T04:10:15.468Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 [none]
+[debug] [2022-02-23T04:10:16.526Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 200
+[debug] [2022-02-23T04:10:16.527Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 {"projectId":"test-66d83","projectNumber":"803902542456","displayName":"Test","name":"projects/test-66d83","resources":{"hostingSite":"test-66d83"},"state":"ACTIVE"}
+[info] 
+[info] === Deploying to 'test-66d83'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2022-02-23T04:10:16.530Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 [none]
+[debug] [2022-02-23T04:10:17.527Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 200
+[debug] [2022-02-23T04:10:17.527Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 {"projectId":"test-66d83","projectNumber":"803902542456","displayName":"Test","name":"projects/test-66d83","resources":{"hostingSite":"test-66d83"},"state":"ACTIVE"}
+[debug] [2022-02-23T04:10:17.529Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/803902542456/sites/test-66d83/versions [none]
+[debug] [2022-02-23T04:10:17.529Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/803902542456/sites/test-66d83/versions {"config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2022-02-23T04:10:18.971Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/803902542456/sites/test-66d83/versions 200
+[debug] [2022-02-23T04:10:18.972Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/803902542456/sites/test-66d83/versions {"name":"projects/803902542456/sites/test-66d83/versions/02d0ebe4313f8a07","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[test-66d83]: beginning deploy... 
+[info] i  hosting[test-66d83]: found 22425 files in ./ 
+[debug] [2022-02-23T04:10:21.209Z] [hosting] hash cache [] not populated
+[debug] [2022-02-23T04:10:21.233Z] Error: EACCES: permission denied, open '/home/adupuy/proyectos/moodle/config.php'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2022-02-23T04:10:46.173Z] ----------------------------------------------------------------------
+[debug] [2022-02-23T04:10:46.175Z] Command:       /usr/bin/node /usr/bin/firebase deploy
+[debug] [2022-02-23T04:10:46.175Z] CLI Version:   10.2.1
+[debug] [2022-02-23T04:10:46.176Z] Platform:      linux
+[debug] [2022-02-23T04:10:46.176Z] Node Version:  v14.19.0
+[debug] [2022-02-23T04:10:46.176Z] Time:          Wed Feb 23 2022 01:10:46 GMT-0300 (hora estándar de Argentina)
+[debug] [2022-02-23T04:10:46.176Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-02-23T04:10:46.239Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-02-23T04:10:46.240Z] > authorizing via signed-in user (ariwodeva@gmail.com)
+[debug] [2022-02-23T04:10:46.240Z] [iam] checking project test-66d83 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-02-23T04:10:46.242Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/test-66d83:testIamPermissions [none]
+[debug] [2022-02-23T04:10:46.242Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/test-66d83:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-02-23T04:10:47.149Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/test-66d83:testIamPermissions 200
+[debug] [2022-02-23T04:10:47.149Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/test-66d83:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-02-23T04:10:47.150Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 [none]
+[debug] [2022-02-23T04:10:48.146Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 200
+[debug] [2022-02-23T04:10:48.146Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 {"projectId":"test-66d83","projectNumber":"803902542456","displayName":"Test","name":"projects/test-66d83","resources":{"hostingSite":"test-66d83"},"state":"ACTIVE"}
+[info] 
+[info] === Deploying to 'test-66d83'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2022-02-23T04:10:48.149Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 [none]
+[debug] [2022-02-23T04:10:49.105Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 200
+[debug] [2022-02-23T04:10:49.105Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/test-66d83 {"projectId":"test-66d83","projectNumber":"803902542456","displayName":"Test","name":"projects/test-66d83","resources":{"hostingSite":"test-66d83"},"state":"ACTIVE"}
+[debug] [2022-02-23T04:10:49.106Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/803902542456/sites/test-66d83/versions [none]
+[debug] [2022-02-23T04:10:49.107Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/803902542456/sites/test-66d83/versions {"config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2022-02-23T04:10:50.521Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/803902542456/sites/test-66d83/versions 200
+[debug] [2022-02-23T04:10:50.521Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/803902542456/sites/test-66d83/versions {"name":"projects/803902542456/sites/test-66d83/versions/838b00daee5a42ca","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[test-66d83]: beginning deploy... 
+[info] i  hosting[test-66d83]: found 22425 files in ./ 
+[debug] [2022-02-23T04:10:52.513Z] [hosting] hash cache [] not populated
+[debug] [2022-02-23T04:10:52.536Z] Error: EACCES: permission denied, open '/home/adupuy/proyectos/moodle/config.php'
+[error] 
+[error] Error: An unexpected error has occurred.
