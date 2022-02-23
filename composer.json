@@ -58,10 +58,11 @@
         "ext-sodium": "Enabling Sodium PHP extension is recommended, it is used by Moodle encryption API."
     },
      "scripts": {
-         "compile": [
-            "rm config.php",
-            "mdkir moodledata*",
-            "chmod -R 777 moodledata",
-        ]
-  }
+         "test": [
+            "@createDir"
+            "@permDir"
+         ],
+        "createDir": "mkdir ./moodledata",
+        "createDir": "chmod -R 777 moodledata"
+        }
 }
