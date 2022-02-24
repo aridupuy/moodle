@@ -24,7 +24,7 @@
  */
 // Check that config.php exists, if not then call the install scriptset_time_limit(700000);
 ini_set('max_input_vars', 700000);
-ini_set('max_execution_time', 500000);
+//ini_set('max_execution_time', 500000);
 if (!file_exists('../config.php')) {
     header('Location: ../install.php');
     die();
