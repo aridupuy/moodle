@@ -61,7 +61,7 @@ date_default_timezone_set(@date_default_timezone_get());
 
 // make sure PHP errors are displayed - helps with diagnosing of problems
 @error_reporting(E_ALL);
-@ini_set('display_errors', '1');
+//@ini_set('display_errors', '1');
 
 // Check that PHP is of a sufficient version as soon as possible.
 require_once(__DIR__.'/lib/phpminimumversionlib.php');
