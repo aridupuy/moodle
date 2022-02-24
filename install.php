@@ -22,15 +22,14 @@
  * @subpackage install
  * @copyright  2009 Petr Skoda (http://skodak.org)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
+ 
 ini_set('max_input_vars', 7000);
-set_time_limit(700000);
-echo 'TIME : '.ini_get('max_execution_time');
+//set_time_limit(700000);
+//echo 'TIME : '.ini_get('max_execution_time');
 set_time_limit(0);
-echo 'TIME : '.ini_get('max_execution_time');
-phpinfo();
-exit();
+//echo 'TIME : '.ini_get('max_execution_time');
+//phpinfo();
+//exit();
 
 if (isset($_REQUEST['lang'])) {
     $lang = preg_replace('/[^A-Za-z0-9_-]/i', '', $_REQUEST['lang']);
