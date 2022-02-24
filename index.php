@@ -22,6 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 ini_set('max_input_vars', 7000);
+set_time_limit(700000);
 
 if (!file_exists('./config.php')) {
     header('Location: install.php');
