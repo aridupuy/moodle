@@ -1,4 +1,4 @@
 #RewriteEngine On
 #RewriteRule ^/webhook? /home/adupuy/proyectos/moodle/webhook.php
 #Alias /webhook /home/adupuy/proyectos/moodle/webhook.php
-@ini_set( 'max_input_vars' , 4000 );
+
