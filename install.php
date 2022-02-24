@@ -23,6 +23,7 @@
  * @copyright  2009 Petr Skoda (http://skodak.org)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+ini_set('max_input_vars', 5000);
 
 if (isset($_REQUEST['lang'])) {
     $lang = preg_replace('/[^A-Za-z0-9_-]/i', '', $_REQUEST['lang']);
