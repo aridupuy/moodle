@@ -23,6 +23,11 @@
  */
 ini_set('max_input_vars', 7000);
 set_time_limit(700000);
+echo 'TIME : '.ini_get('max_execution_time');
+set_time_limit(0);
+echo 'TIME : '.ini_get('max_execution_time');
+phpinfo();
+exit();
 
 if (!file_exists('./config.php')) {
     header('Location: install.php');
