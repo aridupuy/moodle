@@ -21,14 +21,9 @@
  * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  
-ini_set('max_input_vars', 7000);
-set_time_limit(700000);
-echo 'TIME : '.ini_get('max_execution_time');
-set_time_limit(0);
-echo 'TIME : '.ini_get('max_execution_time');
-phpinfo();
-exit();
 */
+ini_set('max_input_vars', 700000);
+ini_set('max_execution_time', 500000);
 if (!file_exists('./config.php')) {
     header('Location: install.php');
     die;

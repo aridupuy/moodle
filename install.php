@@ -22,9 +22,9 @@
  * @subpackage install
  * @copyright  2009 Petr Skoda (http://skodak.org)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- 
-ini_set('max_input_vars', 7000);
-set_time_limit(0);
+ */
+ini_set('max_input_vars', 700000);
+ini_set('max_execution_time', 500000);
 
 if (isset($_REQUEST['lang'])) {
     $lang = preg_replace('/[^A-Za-z0-9_-]/i', '', $_REQUEST['lang']);
@@ -61,7 +61,7 @@ date_default_timezone_set(@date_default_timezone_get());
 
 // make sure PHP errors are displayed - helps with diagnosing of problems
 @error_reporting(E_ALL);
-//@ini_set('display_errors', '1');
+@ini_set('display_errors', '1');
 
 // Check that PHP is of a sufficient version as soon as possible.
 require_once(__DIR__.'/lib/phpminimumversionlib.php');
@@ -84,7 +84,7 @@ if (PHP_INT_SIZE > 4) {
 // increase or decrease available memory - we need to make sure moodle
 // installs even with low memory, otherwise developers would overlook
 // sudden increases of memory needs ;-)
-//@ini_set('memory_limit', $minrequiredmemory);
+@ini_set('memory_limit', $minrequiredmemory);
 
 /** Used by library scripts to check they are being called by Moodle */
 define('MOODLE_INTERNAL', true);
@@ -104,7 +104,7 @@ if (file_exists('install/distrolib.php')) {
 }
 
 $config = new stdClass();
-$config->lang = 'en';
+$config->lang = $lang;
 
 if (!empty($_POST)) {
     $config->stage = (int)$_POST['stage'];
