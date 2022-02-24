@@ -24,7 +24,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 ini_set('max_input_vars', 700000);
-ini_set('max_execution_time', 500000);
+//ini_set('max_execution_time', 500000);
 
 if (isset($_REQUEST['lang'])) {
     $lang = preg_replace('/[^A-Za-z0-9_-]/i', '', $_REQUEST['lang']);
