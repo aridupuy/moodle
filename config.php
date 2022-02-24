@@ -18,8 +18,8 @@ $CFG->dboptions = array (
   'dbcollation' => 'utf8mb4_unicode_ci',
 );
 
-$CFG->wwwroot   = 'http://localhost:4455';
-$CFG->dataroot  = '/home/adupuy/proyectos/moodledata';
+$CFG->wwwroot   = 'http://moodletest2.herokuapp.com/';
+$CFG->dataroot  = '/tmp/moodledata';
 $CFG->admin     = 'admin';
 
 $CFG->directorypermissions = 0777;
