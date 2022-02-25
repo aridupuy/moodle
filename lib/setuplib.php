@@ -1411,8 +1411,12 @@ function redirect_if_major_upgrade_required() {
             // Ignore any errors, redirect to upgrade anyway.
         }
         $url = $CFG->wwwroot . '/' . $CFG->admin . '/index.php';
-        @header($_SERVER['SERVER_PROTOCOL'] . ' 303 See Other');
-        @header('Location: ' . $url);
+        var_dump($CFG->wwwroot);
+	var_dump($CFG->admin);
+	var_dump($url);
+	exit();
+	//@header($_SERVER['SERVER_PROTOCOL'] . ' 303 See Other');
+        //@header('Location: ' . $url);
         echo bootstrap_renderer::plain_redirect_message(htmlspecialchars($url));
         exit;
     }
