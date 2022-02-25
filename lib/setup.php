@@ -1033,8 +1033,6 @@ if (isset($CFG->maintenance_later) and $CFG->maintenance_later <= time()) {
     if (AJAX_SCRIPT) {
         die;
     } else if (!CLI_SCRIPT) {
-        var_dump("aca");
-	exit();
 	redirect(new moodle_url('/'));
     }
 }
