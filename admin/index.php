@@ -729,7 +729,9 @@ if (during_initial_install()) {
  if (!empty($CFG->adminsetuppending)) {
     $sessionstarted = optional_param('sessionstarted', 0, PARAM_BOOL);
     if (!$sessionstarted) {
-        //redirect("index.php?sessionstarted=1&lang=$CFG->lang");
+        var_dump("ACA");
+	exit();
+	redirect("index.php?sessionstarted=1&lang=$CFG->lang");
     } else {
         $sessionverify = optional_param('sessionverify', 0, PARAM_BOOL);
         if (!$sessionverify) {
@@ -792,6 +794,8 @@ require_login(0, false);
 if (isguestuser()) {
     // Login as real user!
     $SESSION->wantsurl = (string)new moodle_url('/admin/index.php');
+    var_dump("ACA2LOGIN");
+	exit();
     redirect(get_login_url());
 }
 $context = context_system::instance();
