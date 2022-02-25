@@ -1,0 +1,13 @@
+{
+    "name": "vendor/tiendanubewebhook",
+    "description": "Description of project tiendanubewebhook.",
+    "authors": [
+        {
+            "name": "adupuy",
+            "email": "your@email.here"
+        }
+    ],
+    "require": {
+        "tiendanube/php-sdk": "v1.1.0"
+    }
+}
