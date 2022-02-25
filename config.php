@@ -21,7 +21,8 @@ ini_set("display_errors", 1);
  
 $CFG->wwwroot   = 'https://moodletest2.herokuapp.com';
  //$CFG->wwwroot   = 'http://localhost:4455';
- $CFG->dataroot  = '/app/moodledata';
+ //$CFG->dataroot  = '/home/adupuy/proyectos/moodledata';
+ $CFG->dataroot  = '/app/moodledata'
  $CFG->admin     = 'admin';
  
  $CFG->directorypermissions = 0777;

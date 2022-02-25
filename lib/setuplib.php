@@ -838,13 +838,14 @@ function initialise_fullme() {
         // Do not abuse this to try to solve lan/wan access problems!!!!!
 
     } else {
-	var_dump($rurl['host']);
-	var_dump( $wwwroot['host']);
-	var_dump($rurl['port']);
-        var_dump( $wwwroot['port']);
-	var_dump($rurl['path']);
-        var_dump( $wwwroot['path']);
-
+	/*
+		var_dump($rurl['host']);
+		var_dump( $wwwroot['host']);
+		var_dump($rurl['port']);
+        	var_dump( $wwwroot['port']);
+		var_dump($rurl['path']);
+        	var_dump( $wwwroot['path']);
+	*/
         if (false and ($rurl['host'] !== $wwwroot['host'])) {
 
             // Explain the problem and redirect them to the right URL
