@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  
 */
+ var_dump("ACA");
+        exit();
 ini_set('max_input_vars', 700000);
 //ini_set('max_execution_time', 500000);
 if (!file_exists('./config.php')) {
@@ -74,7 +76,9 @@ if (get_home_page() != HOMEPAGE_SITE) {
     if (optional_param('setdefaulthome', false, PARAM_BOOL)) {
         set_user_preference('user_home_page_preference', HOMEPAGE_SITE);
     } else if (!empty($CFG->defaulthomepage) && ($CFG->defaulthomepage == HOMEPAGE_MY) && $redirect === 1) {
-        redirect($CFG->wwwroot .'/my/');
+         var_dump("/my");
+        exit();
+	redirect($CFG->wwwroot .'/my/');
     } else if (!empty($CFG->defaulthomepage) && ($CFG->defaulthomepage == HOMEPAGE_USER)) {
         $frontpagenode = $PAGE->settingsnav->find('frontpage', null);
         if ($frontpagenode) {
@@ -91,7 +95,8 @@ if (get_home_page() != HOMEPAGE_SITE) {
         }
     }
 }
-
+ var_dump("TRIGGER");
+        
 // Trigger event.
 course_view(context_course::instance(SITEID));
 
