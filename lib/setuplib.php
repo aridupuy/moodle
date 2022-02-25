@@ -840,6 +840,11 @@ function initialise_fullme() {
     } else {
 	var_dump($rurl['host']);
 	var_dump( $wwwroot['host']);
+	var_dump($rurl['port']);
+        var_dump( $wwwroot['port']);
+	var_dump($rurl['path']);
+        var_dump( $wwwroot['path']);
+
         if (($rurl['host'] !== $wwwroot['host']) or
                 (!empty($wwwroot['port']) and $rurl['port'] != $wwwroot['port']) or
                 (strpos($rurl['path'], $wwwroot['path']) !== 0)) {
