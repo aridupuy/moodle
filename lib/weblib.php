@@ -2245,7 +2245,8 @@ function get_html_lang($dir = false) {
  * }
  * $CFG->additionalhtmlhead .= '<meta http-equiv="X-UA-Compatible" content="IE=8" />';
  * header('X-UA-Compatible: IE=8');
- * echo $OUTPUT->header();
+ * echo $OUTPUT->
+header();
  * </code>
  *
  * Please note the $CFG->additionalhtmlhead alone might not work,
@@ -2966,8 +2967,8 @@ function redirect($url, $message='', $delay=null, $messagetype = \core\output\no
         @header("X-Redirect-By: $redirectby");
 
         // 302 might not work for POST requests, 303 is ignored by obsolete clients.
-        @header($_SERVER['SERVER_PROTOCOL'] . ' 303 See Other');
-        @header('Location: '.$url);
+       // @header($_SERVER['SERVER_PROTOCOL'] . ' 303 See Other');
+        //@header('Location: '.$url);
         echo bootstrap_renderer::plain_redirect_message($encodedurl);
         exit;
     }
