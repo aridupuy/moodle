@@ -845,9 +845,7 @@ function initialise_fullme() {
 	var_dump($rurl['path']);
         var_dump( $wwwroot['path']);
 
-        if (($rurl['host'] !== $wwwroot['host']) or
-                (!empty($wwwroot['port']) ) or
-                (strpos($rurl['path'], $wwwroot['path']) !== 0)) {
+        if (($rurl['host'] !== $wwwroot['host'])) {
 
             // Explain the problem and redirect them to the right URL
             if (!defined('NO_MOODLE_COOKIES')) {
