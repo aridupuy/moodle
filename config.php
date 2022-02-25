@@ -18,7 +18,8 @@
    'dbcollation' => 'utf8mb4_unicode_ci',
  );
  
- $CFG->wwwroot   = 'https://moodletest2.herokuapp.com';
+$CFG->wwwroot   = 'https://moodletest2.herokuapp.com';
+ //$CFG->wwwroot   = 'http://localhost:4455';
  $CFG->dataroot  = '/tmp';
  $CFG->admin     = 'admin';
  

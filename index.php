@@ -32,9 +32,6 @@ if (!file_exists('./config.php')) {
 require_once('config.php');
 require_once($CFG->dirroot .'/course/lib.php');
 require_once($CFG->libdir .'/filelib.php');
-var_dump($CFG);
-exit();
-
 redirect_if_major_upgrade_required();
 $urlparams = array();
 if (!empty($CFG->defaulthomepage) && ($CFG->defaulthomepage == HOMEPAGE_MY) && optional_param('redirect', 1, PARAM_BOOL) === 0) {
@@ -90,7 +87,6 @@ if (get_home_page() != HOMEPAGE_SITE) {
         }
     }
 }
- var_dump("TRIGGER");
         
 // Trigger event.
 course_view(context_course::instance(SITEID));
