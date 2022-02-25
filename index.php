@@ -23,8 +23,6 @@
  
 */
 ini_set('max_input_vars', 700000);
-var_dump($CFG);
-exit();
 //ini_set('max_execution_time', 500000);
 if (!file_exists('./config.php')) {
     header('Location: install.php');
@@ -34,6 +32,8 @@ if (!file_exists('./config.php')) {
 require_once('config.php');
 require_once($CFG->dirroot .'/course/lib.php');
 require_once($CFG->libdir .'/filelib.php');
+var_dump($CFG);
+exit();
 
 redirect_if_major_upgrade_required();
 $urlparams = array();
