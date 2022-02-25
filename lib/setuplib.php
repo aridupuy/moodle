@@ -845,7 +845,7 @@ function initialise_fullme() {
 	var_dump($rurl['path']);
         var_dump( $wwwroot['path']);
 
-        if (($rurl['host'] !== $wwwroot['host'])) {
+        if (false and ($rurl['host'] !== $wwwroot['host'])) {
 
             // Explain the problem and redirect them to the right URL
             if (!defined('NO_MOODLE_COOKIES')) {
@@ -885,7 +885,7 @@ function initialise_fullme() {
             if (defined('REQUIRE_CORRECT_ACCESS') && REQUIRE_CORRECT_ACCESS) {
                 print_error('sslonlyaccess', 'error');
             } else {
-                redirect($CFG->wwwroot, get_string('wwwrootmismatch', 'error', $CFG->wwwroot), 3);
+                redirect($CFG->wwwroot, get_string('wwwrootmismatch', 'error', $CFG->wwwroot), 0);
             }
         }
     } else {

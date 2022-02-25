@@ -793,8 +793,6 @@ require_login(0, false);
 if (isguestuser()) {
     // Login as real user!
     $SESSION->wantsurl = (string)new moodle_url('/admin/index.php');
-    var_dump("ACA2LOGIN");
-	exit();
     redirect(get_login_url());
 }
 $context = context_system::instance();
