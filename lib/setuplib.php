@@ -1406,7 +1406,7 @@ function redirect_if_major_upgrade_required() {
     global $CFG;
     if (is_major_upgrade_required()) {
         try {
-            @\core\session\manager::terminate_current();
+            //\core\session\manager::terminate_current();
         } catch (Exception $e) {
             // Ignore any errors, redirect to upgrade anyway.
         }
