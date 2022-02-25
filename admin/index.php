@@ -729,9 +729,8 @@ if (during_initial_install()) {
  if (!empty($CFG->adminsetuppending)) {
     $sessionstarted = optional_param('sessionstarted', 0, PARAM_BOOL);
     if (!$sessionstarted) {
-        var_dump("ACA");
-	exit();
 	redirect("index.php?sessionstarted=1&lang=$CFG->lang");
+	
     } else {
         $sessionverify = optional_param('sessionverify', 0, PARAM_BOOL);
         if (!$sessionverify) {

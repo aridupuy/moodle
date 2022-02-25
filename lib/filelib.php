@@ -4618,7 +4618,7 @@ function file_pluginfile($relativepath, $forcedownload, $preview = null, $offlin
                 // also if login is required for profile images and is not logged in or guest
                 // do not use require_login() because it is expensive and not suitable here anyway
                 $theme = theme_config::load($themename);
-                redirect($theme->image_url('u/'.$filename, 'moodle')); // intentionally not cached
+                //redirect($theme->image_url('u/'.$filename, 'moodle')); // intentionally not cached
             }
 
             if (!$file = $fs->get_file($context->id, 'user', 'icon', 0, '/', $filename.'.png')) {
