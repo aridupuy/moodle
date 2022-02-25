@@ -23,6 +23,8 @@
  
 */
 ini_set('max_input_vars', 700000);
+var_dump($CFG);
+exit();
 //ini_set('max_execution_time', 500000);
 if (!file_exists('./config.php')) {
     header('Location: install.php');
@@ -33,13 +35,11 @@ require_once('config.php');
 require_once($CFG->dirroot .'/course/lib.php');
 require_once($CFG->libdir .'/filelib.php');
 
-//redirect_if_major_upgrade_required();
-var_dump("ACA2");
+redirect_if_major_upgrade_required();
 $urlparams = array();
 if (!empty($CFG->defaulthomepage) && ($CFG->defaulthomepage == HOMEPAGE_MY) && optional_param('redirect', 1, PARAM_BOOL) === 0) {
     $urlparams['redirect'] = 0;
 }
-var_dump($urlparams);
 $PAGE->set_url('/', $urlparams);
 $PAGE->set_pagelayout('frontpage');
 $PAGE->set_other_editing_capability('moodle/course:update');
@@ -65,7 +65,7 @@ if ($hassiteconfig && moodle_needs_upgrading()) {
 }
 
 // If site registration needs updating, redirect.
-//\core\hub\registration::registration_reminder('/index.php');
+\core\hub\registration::registration_reminder('/index.php');
 
 if (get_home_page() != HOMEPAGE_SITE) {
     // Redirect logged-in users to My Moodle overview if required.
