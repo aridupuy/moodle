@@ -49,7 +49,7 @@ $PAGE->set_other_editing_capability('moodle/course:activityvisibility');
 // Prevent caching of this page to stop confusion when changing page after making AJAX changes.
 $PAGE->set_cacheable(false);
 
-require_course_login($SITE);
+//require_course_login($SITE);
 
 $hasmaintenanceaccess = has_capability('moodle/site:maintenanceaccess', context_system::instance());
 
@@ -61,13 +61,11 @@ if (!empty($CFG->maintenance_enabled) and !$hasmaintenanceaccess) {
 $hassiteconfig = has_capability('moodle/site:config', context_system::instance());
 
 if ($hassiteconfig && moodle_needs_upgrading()) {
-    var_dump("ACA1");
-	exit();
     redirect($CFG->wwwroot .'/'. $CFG->admin .'/index.php');
 }
 
 // If site registration needs updating, redirect.
-\core\hub\registration::registration_reminder('/index.php');
+//\core\hub\registration::registration_reminder('/index.php');
 
 if (get_home_page() != HOMEPAGE_SITE) {
     // Redirect logged-in users to My Moodle overview if required.
@@ -75,8 +73,6 @@ if (get_home_page() != HOMEPAGE_SITE) {
     if (optional_param('setdefaulthome', false, PARAM_BOOL)) {
         set_user_preference('user_home_page_preference', HOMEPAGE_SITE);
     } else if (!empty($CFG->defaulthomepage) && ($CFG->defaulthomepage == HOMEPAGE_MY) && $redirect === 1) {
-         var_dump("/my");
-        exit();
 	redirect($CFG->wwwroot .'/my/');
     } else if (!empty($CFG->defaulthomepage) && ($CFG->defaulthomepage == HOMEPAGE_USER)) {
         $frontpagenode = $PAGE->settingsnav->find('frontpage', null);
