@@ -22,8 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  
 */
- var_dump("ACA");
-        exit();
 ini_set('max_input_vars', 700000);
 //ini_set('max_execution_time', 500000);
 if (!file_exists('./config.php')) {
@@ -36,11 +34,12 @@ require_once($CFG->dirroot .'/course/lib.php');
 require_once($CFG->libdir .'/filelib.php');
 
 //redirect_if_major_upgrade_required();
-
+var_dump("ACA2");
 $urlparams = array();
 if (!empty($CFG->defaulthomepage) && ($CFG->defaulthomepage == HOMEPAGE_MY) && optional_param('redirect', 1, PARAM_BOOL) === 0) {
     $urlparams['redirect'] = 0;
 }
+var_dump($urlparams);
 $PAGE->set_url('/', $urlparams);
 $PAGE->set_pagelayout('frontpage');
 $PAGE->set_other_editing_capability('moodle/course:update');
@@ -62,7 +61,7 @@ if (!empty($CFG->maintenance_enabled) and !$hasmaintenanceaccess) {
 $hassiteconfig = has_capability('moodle/site:config', context_system::instance());
 
 if ($hassiteconfig && moodle_needs_upgrading()) {
-    var_dump("ACA");
+    var_dump("ACA1");
 	exit();
     redirect($CFG->wwwroot .'/'. $CFG->admin .'/index.php');
 }
