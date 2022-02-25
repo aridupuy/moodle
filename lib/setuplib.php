@@ -846,7 +846,7 @@ function initialise_fullme() {
         var_dump( $wwwroot['path']);
 
         if (($rurl['host'] !== $wwwroot['host']) or
-                (!empty($wwwroot['port']) and $rurl['port'] != $wwwroot['port']) or
+                (!empty($wwwroot['port']) ) or
                 (strpos($rurl['path'], $wwwroot['path']) !== 0)) {
 
             // Explain the problem and redirect them to the right URL
