@@ -19,10 +19,10 @@ ini_set("display_errors", 1);
    'dbcollation' => 'utf8mb4_unicode_ci',
  );
  
-$CFG->wwwroot   = 'https://moodletest2.herokuapp.com';
+ $CFG->wwwroot   = 'https://moodletest2.herokuapp.com';
  //$CFG->wwwroot   = 'http://localhost:4455';
  //$CFG->dataroot  = '/home/adupuy/proyectos/moodledata';
- $CFG->dataroot  = '/app/moodledata'
+ $CFG->dataroot  = '/app/moodledata';
  $CFG->admin     = 'admin';
  
  $CFG->directorypermissions = 0777;
