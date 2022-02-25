@@ -60,6 +60,8 @@ if (!empty($CFG->maintenance_enabled) and !$hasmaintenanceaccess) {
 $hassiteconfig = has_capability('moodle/site:config', context_system::instance());
 
 if ($hassiteconfig && moodle_needs_upgrading()) {
+    var_dump("ACA");
+	exit();
     redirect($CFG->wwwroot .'/'. $CFG->admin .'/index.php');
 }
 
