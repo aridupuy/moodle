@@ -2969,8 +2969,8 @@ function redirect($url, $message='', $delay=null, $messagetype = \core\output\no
         // 302 might not work for POST requests, 303 is ignored by obsolete clients.
        // @header($_SERVER['SERVER_PROTOCOL'] . ' 303 See Other');
         //@header('Location: '.$url);
-        echo bootstrap_renderer::plain_redirect_message($encodedurl);
-        exit;
+        //echo bootstrap_renderer::plain_redirect_message($encodedurl);
+        //exit;
     }
 
     // Include a redirect message, even with a HTTP redirect, because that is recommended practice.
