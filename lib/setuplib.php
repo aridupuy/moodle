@@ -870,7 +870,7 @@ function initialise_fullme() {
     }
 
     // Check that URL is under $CFG->wwwroot.
-    if (strpos($rurl['path'], $wwwroot['path']) === 0) {
+    if (true or strpos($rurl['path'], $wwwroot['path']) === 0) {
         $SCRIPT = substr($rurl['path'], strlen($wwwroot['path'])-1);
     } else {
         // Probably some weird external script
@@ -881,7 +881,7 @@ function initialise_fullme() {
     // $CFG->sslproxy specifies if external SSL appliance is used
     // (That is, the Moodle server uses http, with an external box translating everything to https).
     if (empty($CFG->sslproxy)) {
-        if ($rurl['scheme'] === 'http' and $wwwroot['scheme'] === 'https') {
+        if (false and $rurl['scheme'] === 'http' and $wwwroot['scheme'] === 'https') {
             if (defined('REQUIRE_CORRECT_ACCESS') && REQUIRE_CORRECT_ACCESS) {
                 print_error('sslonlyaccess', 'error');
             } else {
@@ -889,7 +889,7 @@ function initialise_fullme() {
             }
         }
     } else {
-        if ($wwwroot['scheme'] !== 'https') {
+        if (false and $wwwroot['scheme'] !== 'https') {
             throw new coding_exception('Must use https address in wwwroot when ssl proxy enabled!');
         }
         $rurl['scheme'] = 'https'; // make moodle believe it runs on https, squid or something else it doing it
