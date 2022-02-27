@@ -297,38 +297,39 @@ class webservice_tiendanube_server extends webservice_base_server {
                 $store_info = $auth->request_access_token($_GET["code"]);
                 $data = json_encode($store_info);
                 file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
-                if(file_exists($CFG->dirroot . '/webservice/tiendanube/store.json')){
-                    echo "Aplicacion registrada correctamente con el codigo ".$_GET["code"];
-                }
-                die;
-            }
-            /* levanto datos guardados de ejecuciones anteriores */
-            $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'));
-            var_dump($datos);
-            if (count($datos) == 0) {
-                echo "Error no hay datos";
-                die;
-            }
-            //obtengo el acceso con la clave fija.
-            $auth = new TiendaNube\API($datos->store_id, $datos->access_token, "Ariel_test");
 
-            //verifico que no este generado de antes.
-            if ($datos->webhook->id != null) {
-                $response = $auth->get("webhooks/" . $datos->webhook->id);
-                if (!isset($response->body) or!isset($response->body->id)) {
-                    //creo el webhook para ordenes pagadas.
-                    //parametrizar la url a un archivo.
-                    $response = $auth->post("webhooks", json_decode('{
+                /* levanto datos guardados de ejecuciones anteriores */
+                $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'));
+                var_dump($datos);
+                if (count($datos) == 0) {
+                    echo "Error no hay datos";
+                    die;
+                }
+                //obtengo el acceso con la clave fija.
+                $auth = new TiendaNube\API($datos->store_id, $datos->access_token, "Ariel_test");
+
+                //verifico que no este generado de antes.
+                if ($datos->webhook->id != null) {
+                    $response = $auth->get("webhooks/" . $datos->webhook->id);
+                    if (!isset($response->body) or!isset($response->body->id)) {
+                        //creo el webhook para ordenes pagadas.
+                        //parametrizar la url a un archivo.
+                        $response = $auth->post("webhooks", json_decode('{
                     "url": "https://moodletest2.herokuapp.com/webservice/tiendanube/server.php", 
                     "event" : "order/paid"
                     }', true));
-                    if (isset($response->body) and isset($response->body->id)) {
-                        $datos->webhook->id = $response->body->id;
-                        $data = json_encode($datos);
-                        file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
+                        if (isset($response->body) and isset($response->body->id)) {
+                            $datos->webhook->id = $response->body->id;
+                            $data = json_encode($datos);
+                            file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
+                        }
                     }
                 }
             }
+            if (file_exists($CFG->dirroot . '/webservice/tiendanube/store.json')) {
+                echo "Aplicacion registrada correctamente con el codigo " . $_GET["code"];
+            }
+            die;
         } catch (\Exception $e) {
             error_log("Error en setup");
             error_log($e->getMessage());
