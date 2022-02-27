@@ -23,6 +23,7 @@ include( 'config.php' );
 require_once("$CFG->dirroot/webservice/lib.php");
 require_once($CFG->dirroot . '/webservice/tiendanube/vendor/autoload.php');
 
+echo $CFG->dirroot . '/webservice/tiendanube/vendor/autoload.php';
 /**
  * REST service server implementation.
  *
@@ -315,9 +316,9 @@ class webservice_tiendanube_server extends webservice_base_server {
                         //creo el webhook para ordenes pagadas.
                         //parametrizar la url a un archivo.
                         $response = $auth->post("webhooks", json_decode('{
-                    "url": "https://moodletest2.herokuapp.com/webservice/tiendanube/server.php", 
-                    "event" : "order/paid"
-                    }', true));
+                                        "url": "https://moodletest2.herokuapp.com/webservice/tiendanube/server.php", 
+                                        "event" : "order/paid"
+                                    }', true));
                         if (isset($response->body) and isset($response->body->id)) {
                             $datos->webhook->id = $response->body->id;
                             $data = json_encode($datos);
