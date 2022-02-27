@@ -23,7 +23,7 @@ include( 'config.php' );
 require_once("$CFG->dirroot/webservice/lib.php");
 require_once($CFG->dirroot . '/webservice/tiendanube/vendor/autoload.php');
 
-echo $CFG->dirroot . '/webservice/tiendanube/vendor/autoload.php';
+//echo $CFG->dirroot . '/webservice/tiendanube/vendor/autoload.php';
 /**
  * REST service server implementation.
  *
@@ -296,6 +296,7 @@ class webservice_tiendanube_server extends webservice_base_server {
             if ($_GET["code"]) {
                 $auth = new TiendaNube\Auth(self::CLIENT_ID, self::CLIENT_SECRET);
                 var_dump($auth);
+                var_dump("aca");
                 $store_info = $auth->request_access_token($_GET["code"]);
                 var_dump($store_info);
                 $data = json_encode($store_info);
