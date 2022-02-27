@@ -294,6 +294,7 @@ class webservice_tiendanube_server extends webservice_base_server {
         try {
             /* este dato es para actualizar el token permanente de la app de tiendanube */
             if ($_GET["code"]) {
+                unlink("$CFG->dirroot . '/webservice/tiendanube/store.json'");
                 $auth = new TiendaNube\Auth(self::CLIENT_ID, self::CLIENT_SECRET);
                 error_log(json_encode($auth));
                 $store_info = $auth->request_access_token($_GET["code"]);
@@ -312,9 +313,11 @@ class webservice_tiendanube_server extends webservice_base_server {
                 //obtengo el acceso con la clave fija.
                 $auth = new TiendaNube\API($datos->store_id, $datos->access_token, "Ariel_test");
 
+                error_log($datos->webhook->id);
                 //verifico que no este generado de antes.
                 if ($datos->webhook->id != null) {
                     $response = $auth->get("webhooks/" . $datos->webhook->id);
+                    error_log(json_encode($response)); 
                     if (!isset($response->body) or!isset($response->body->id)) {
                         //creo el webhook para ordenes pagadas.
                         //parametrizar la url a un archivo.
@@ -322,6 +325,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                                         "url": "https://moodletest2.herokuapp.com/webservice/tiendanube/server.php", 
                                         "event" : "order/paid"
                                     }', true));
+                        error_log(json_encode($response));
                         if (isset($response->body) and isset($response->body->id)) {
                             $datos->webhook->id = $response->body->id;
                             $data = json_encode($datos);
