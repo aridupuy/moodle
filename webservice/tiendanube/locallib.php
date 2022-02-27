@@ -304,7 +304,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                 file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
 
                 /* levanto datos guardados de ejecuciones anteriores */
-                $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'));
+                $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'),true);
                 var_dump($datos);
                 if (count($datos) == 0) {
                     echo "Error no hay datos";
