@@ -295,17 +295,16 @@ class webservice_tiendanube_server extends webservice_base_server {
             /* este dato es para actualizar el token permanente de la app de tiendanube */
             if ($_GET["code"]) {
                 $auth = new TiendaNube\Auth(self::CLIENT_ID, self::CLIENT_SECRET);
-                var_dump($auth);
-                var_dump("aca");
+                error_log(json_encode($auth));
                 $store_info = $auth->request_access_token($_GET["code"]);
-                var_dump($store_info);
+                error_log(json_encode($store_info));
                 $data = json_encode($store_info);
-                var_dump($data);
+                error_log(json_encode($data));
                 file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
 
                 /* levanto datos guardados de ejecuciones anteriores */
                 $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'),true);
-                var_dump($datos);
+                error_log(json_encode($datos));
                 if (count($datos) == 0) {
                     echo "Error no hay datos";
                     die;
@@ -326,6 +325,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                         if (isset($response->body) and isset($response->body->id)) {
                             $datos->webhook->id = $response->body->id;
                             $data = json_encode($datos);
+                            error_log($data);
                             file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
                         }
                     }
@@ -333,6 +333,7 @@ class webservice_tiendanube_server extends webservice_base_server {
             }
             if (file_exists($CFG->dirroot . '/webservice/tiendanube/store.json')) {
                 echo "Aplicacion registrada correctamente con el codigo " . $_GET["code"];
+                error_log("Aplicacion registrada correctamente con el codigo " . $_GET["code"]);
             }
             die;
         } catch (\Exception $e) {
