@@ -335,6 +335,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                         }
                     }
                 } else {
+                    try{
                     error_log("Webhook no registrado Registrando");
                     $response = $auth->post("webhooks", json_decode('{
                                         "url": "https://moodletest2.herokuapp.com/webservice/tiendanube/server.php", 
@@ -346,6 +347,11 @@ class webservice_tiendanube_server extends webservice_base_server {
                         $data = json_encode($datos);
                         error_log($data);
                         file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
+                    }
+                    }
+                    catch(Exception $e){
+                        error_log($e->getMessage());
+                        error_log($e->getTraceAsString());
                     }
                 }
             }
