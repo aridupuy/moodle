@@ -311,7 +311,9 @@ class webservice_tiendanube_server extends webservice_base_server {
                     die;
                 }
                 //obtengo el acceso con la clave fija.
-                $auth = new TiendaNube\API($datos->store_id, $datos->access_token, "Ariel_test");
+                error_log($datos->access_token);
+                error_log($store_info->access_token);
+                $auth = new TiendaNube\API($datos->store_id, $store_info->access_token, "Ariel_test");
 
                 error_log($datos->webhook->id);
                 //verifico que no este generado de antes.
