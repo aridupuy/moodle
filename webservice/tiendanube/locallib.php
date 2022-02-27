@@ -298,7 +298,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                 $data = json_encode($store_info);
                 file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
                 if(file_exists($CFG->dirroot . '/webservice/tiendanube/store.json')){
-                    echo "Aplicacion registrada correctamente con el codigo ".$_GET["code"]
+                    echo "Aplicacion registrada correctamente con el codigo ".$_GET["code"];
                 }
                 die;
             }
