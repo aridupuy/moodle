@@ -304,7 +304,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                 file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
 
                 /* levanto datos guardados de ejecuciones anteriores */
-                $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'),true);
+                $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'), true);
                 error_log(json_encode($datos));
                 if (count($datos) == 0) {
                     echo "Error no hay datos";
@@ -316,8 +316,9 @@ class webservice_tiendanube_server extends webservice_base_server {
                 error_log($datos->webhook->id);
                 //verifico que no este generado de antes.
                 if ($datos->webhook->id != null) {
+                    error_log("Webhook registrado actualizando");
                     $response = $auth->get("webhooks/" . $datos->webhook->id);
-                    error_log(json_encode($response)); 
+                    error_log(json_encode($response));
                     if (!isset($response->body) or!isset($response->body->id)) {
                         //creo el webhook para ordenes pagadas.
                         //parametrizar la url a un archivo.
@@ -332,6 +333,19 @@ class webservice_tiendanube_server extends webservice_base_server {
                             error_log($data);
                             file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
                         }
+                    }
+                } else {
+                    error_log("Webhook no registrado Registrando");
+                    $response = $auth->post("webhooks", json_decode('{
+                                        "url": "https://moodletest2.herokuapp.com/webservice/tiendanube/server.php", 
+                                        "event" : "order/paid"
+                                    }', true));
+                    error_log(json_encode($response));
+                    if (isset($response->body) and isset($response->body->id)) {
+                        $datos->webhook->id = $response->body->id;
+                        $data = json_encode($datos);
+                        error_log($data);
+                        file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
                     }
                 }
             }
