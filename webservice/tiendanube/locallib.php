@@ -295,8 +295,11 @@ class webservice_tiendanube_server extends webservice_base_server {
             /* este dato es para actualizar el token permanente de la app de tiendanube */
             if ($_GET["code"]) {
                 $auth = new TiendaNube\Auth(self::CLIENT_ID, self::CLIENT_SECRET);
+                var_dump($auth);
                 $store_info = $auth->request_access_token($_GET["code"]);
+                var_dump($store_info);
                 $data = json_encode($store_info);
+                var_dump($data);
                 file_put_contents($CFG->dirroot . '/webservice/tiendanube/store.json', $data);
 
                 /* levanto datos guardados de ejecuciones anteriores */
