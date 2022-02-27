@@ -319,7 +319,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                     //creo el webhook para ordenes pagadas.
                     //parametrizar la url a un archivo.
                     $response = $auth->post("webhooks", json_decode('{
-                    "url": "http://localhost:4455/webservice/tiendanube/server.php", 
+                    "url": "https://moodletest2.herokuapp.com/webservice/tiendanube/server.php", 
                     "event" : "order/paid"
                     }', true));
                     if (isset($response->body) and isset($response->body->id)) {
