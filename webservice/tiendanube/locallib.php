@@ -481,9 +481,9 @@ class webservice_tiendanube_server extends webservice_base_server {
     public function get_usser_by_identification($identification) {
 //        $courseconfig = get_config('moodlecourse');
         global $DB;
-        if (!$DB->record_exists('user', array('idnumber' => $identification))) {
-            throw new moodle_exception('idnumber', '', '', $identification);
-        }
+//        if (!$DB->record_exists('user', array('idnumber' => $identification))) {
+//            throw new moodle_exception('idnumber', '', '', $identification);
+//        }
         list($where, $params) = $DB->get_in_or_equal($identification);
         $ussers= $DB->get_records_select('course', 'idnumber' . $where, $params, '', '*');
         error_log(json_encode($ussers));
