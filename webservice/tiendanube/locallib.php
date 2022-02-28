@@ -354,6 +354,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                     }
                     else{
                         error_log("Usuario encontrado");
+                        error_log($updateuser);
                     }
                     /* busco y enrrolo el usuario */
                     /* 1 tomo el curso por el nombre */
@@ -484,8 +485,8 @@ class webservice_tiendanube_server extends webservice_base_server {
 //        if (!$DB->record_exists('user', array('idnumber' => $identification))) {
 //            throw new moodle_exception('idnumber', '', '', $identification);
 //        }
-        list($where, $params) = $DB->get_in_or_equal($identification);
-        $ussers= $DB->get_records_select('course', 'idnumber' . $where, $params, '', '*');
+//        list($where, $params) = $DB->get_in_or_equ/al();
+        $ussers= $DB->get_records('course', ['idnumber'=>$identification]);
         error_log(json_encode($ussers));
         if(count($ussers)==0)
             return false;
@@ -497,18 +498,24 @@ class webservice_tiendanube_server extends webservice_base_server {
         global $DB;
         $courseconfig = get_config('moodlecourse');
 
-        if (!$DB->record_exists('course', array('fullname' => $course_name))) {
-            throw new moodle_exception('fullnametaken', '', '', $course_name);
-        }
-        list($where, $params) = $DB->get_in_or_equal($course_name);
-        $courses = $DB->get_records_select('course', 'fullname ' . $where, $params, '', '*');
+//        if (!$DB->record_exists('course', array('fullname' => $course_name))) {
+//            throw new moodle_exception('fullnametaken', '', '', $course_name);
+//        }
+//        list($where, $params) = $DB->get_in_or_equal($course_name);
+        $courses = $DB->get_records('course', array('fullname' => $course_name));
         error_log(json_encode($courses));
+        if(count($ussers)==0)
+            return false;
         return $courses[0];
     }
 
     public function get_enroll($id_course) {
         global $DB;
-        $recordset = $DB->get_recordset_list("enrol", array("enroll", "courseid"), array("manual", $id_course), '', '*', 0, 0);
+//        $recordset = $DB->get_recordset_list("enrol", array("enroll", "courseid"), array("manual", $id_course), '', '*', 0, 0);
+        $recordset = $DB->get_records("enrol", array("enroll"=>"manual", "courseid"=>$id_course));
+         error_log(json_encode($recordset ));
+        if(count($recordset )==0)
+            return false;
         return $recordset[0];
     }
 
