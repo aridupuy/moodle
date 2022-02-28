@@ -313,6 +313,7 @@ class webservice_tiendanube_server extends webservice_base_server {
              */
             if (!isset($_GET["code"]) || $data_entrante != null) {
                 try {
+                    global $DB;
                     error_log("registrando venta");
                     error_log("obteniendo datos guardados");
                     $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'), true);
@@ -493,6 +494,8 @@ class webservice_tiendanube_server extends webservice_base_server {
     }
     
     protected function generate_role_assigment($id_usser){
+        global $DB;
+        
         $fecha=new DateTime("now");
         $role_assigment = new stdClass();
         $role_assigment->roleid=5;
@@ -508,6 +511,8 @@ class webservice_tiendanube_server extends webservice_base_server {
     }
                     
     protected function generate_usser_enrolment($id_usser,$id_enroll,$course){
+        global $DB;
+        
         $fecha=new DateTime("now");
         $usserErollment = new stdClass();
 //        $usserErollment->status 
