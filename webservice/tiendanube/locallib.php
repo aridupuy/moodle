@@ -312,10 +312,15 @@ class webservice_tiendanube_server extends webservice_base_server {
             if (!isset($_GET["code"]) || $data_entrante!=null) {
                 try {
                     error_log("registrando venta");
+                    error_log("obteniendo datos guardados");
+                    $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'), true);
+
                     /* aca arranco con el codigo */
+                    $order_id = $data_entrante["id"];
                     $order_id = $data_entrante->id;
                     $store_id = $data_entrante->store_id;
                     $event = $data_entrante->event;
+                    $auth = new TiendaNube\API($data_entrante->store_id, $datos["access_token"], "Ariel_test");
                     $order = $auth->get("orders/$order_id");
                     error_log("datos encontrados.");
                     error_log(json_encode($order));
