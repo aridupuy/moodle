@@ -21,6 +21,8 @@ defined('MOODLE_INTERNAL') || die();
 //require_once($CFG->libdir . '/moodlelib.php');
 include( 'config.php' );
 require_once("$CFG->dirroot/webservice/lib.php");
+require_once("$CFG->dirroot/course/edit.php");
+require_once("../../course/edit.php");
 require_once($CFG->dirroot . '/webservice/tiendanube/vendor/autoload.php');
 
 //echo $CFG->dirroot . '/webservice/tiendanube/vendor/autoload.php';
@@ -293,12 +295,12 @@ class webservice_tiendanube_server extends webservice_base_server {
         };
         try {
 
-            $data_entrante=(json_decode(file_get_contents('php://input')));
+            $data_entrante = (json_decode(file_get_contents('php://input')));
             error_log(json_encode($data_entrante));
             $auth = new TiendaNube\Auth(self::CLIENT_ID, self::CLIENT_SECRET);
             /*
              * ejemplo recepcion;
-                {"body":
+              {"body":
              *          {"id":1960446,
              *           "event":"order\/paid",
              *           "url":"https:\/\/moodletest2.herokuapp.com\/webservice\/tiendanube\/server.php",
@@ -309,7 +311,7 @@ class webservice_tiendanube_server extends webservice_base_server {
              *           "main_language":"es"
              * }
              */
-            if (!isset($_GET["code"]) || $data_entrante!=null) {
+            if (!isset($_GET["code"]) || $data_entrante != null) {
                 try {
                     error_log("registrando venta");
                     error_log("obteniendo datos guardados");
@@ -332,10 +334,10 @@ class webservice_tiendanube_server extends webservice_base_server {
                     $customer = $order->body->customer;
                     error_log(json_encode($customer));
                     error_log(json_encode($product));
-                    die();
+                    $DB->start_delegated_transaction();
+
                     $updateuser = create_user_record($customer->email, $customer->identification, 'manual');
-                    
-                    
+
 //        $updateuser = new stdClass();
                     $updateuser->username = $customer->email;            // Remember it just in case.
                     $updateuser->email = md5($customer->email); // Store hash of username, useful importing/restoring users.
@@ -347,7 +349,43 @@ class webservice_tiendanube_server extends webservice_base_server {
                     $updateuser->country = $customer->country;
                     $updateuser->department = $customer->province;
                     user_update_user($updateuser, false, false);
+
+                    /* busco y enrrolo el usuario */
+                    /* 1 tomo el curso por el nombre*/
+                    $course = $this->get_course_by_name($product->name);
+                    if(!$course){
+                       $DB->rollback_delegated_transaction();
+                       error_log("Error en busqueda de cursos");
+                       die();
+                    }
+                    $id_course = $course->id;
                     
+                    /* 2 buscar enroll por "manual " e id_course */
+                    $enroll = $this->get_enroll($id_course);
+                    if(!$enroll){
+                       $DB->rollback_delegated_transaction();
+                       error_log("Error al obtener el metodo de erolamiento.");
+                       die();
+                    }
+//                    $id_enroll = $course->id;
+                    /* 3 generar role assigment usserid,id_role=5,context_id=25*/
+                    $newroleid=$this->generate_role_assigment($updateuser->id);
+                    if(!$newroleid){
+                        $DB->rollback_delegated_transaction();
+                        error_log("no se genero el role assigment");
+                        die();
+//                  
+                    }
+                    /* 4 generar usser enrolment usserid,id_course */
+                    $newussererollmentid=$this->generate_usser_enrolment($updateuser->id,$id_enroll,$course);
+                    if($newussererollmentid){
+                        $DB->rollback_delegated_transaction();
+                        error_log("Error al generar el usser erolment");
+                        die();
+                    }
+                    $DB->commit_delegated_transaction();
+                    error_log("Usuario registrado y enrolado al curso");
+                    die();
                     
                 } catch (\Exception $e) {
                     error_log("Error en ejecucion del cobro");
@@ -359,7 +397,7 @@ class webservice_tiendanube_server extends webservice_base_server {
             /* este dato es para actualizar el token permanente de la app de tiendanube */
             if ($_GET["code"]) {
                 unlink("$CFG->dirroot . '/webservice/tiendanube/store.json'");
-                
+
                 error_log(json_encode($auth));
                 $store_info = $auth->request_access_token($_GET["code"]);
                 error_log(json_encode($store_info));
@@ -435,6 +473,56 @@ class webservice_tiendanube_server extends webservice_base_server {
         }
     }
 
+    protected function get_course_by_name($course_name) {
+        global $DB;
+        $courseconfig = get_config('moodlecourse');
+
+        if (!$DB->record_exists('course', array('fullname' => $course_name))) {
+            throw new moodle_exception('fullnametaken', '', '', $course_name);
+        }
+        list($where, $params) = $DB->get_in_or_equal($course_name);
+        $courses=$DB->get_records_select('course', 'fullname ' . $where, $params, '', '*');
+        error_log(json_encode($courses));
+        return $courses[0];
+    }
+    protected function get_enroll($id_course){
+        global $DB;
+        
+        $recordset=$DB->get_recordset_list("enrol", array("enroll","courseid"), array("manual",$id_course), '', '*', 0, 0);
+        return $recordset[0];
+    }
+    
+    protected function generate_role_assigment($id_usser){
+        $fecha=new DateTime("now");
+        $role_assigment = new stdClass();
+        $role_assigment->roleid=5;
+        $role_assigment->contextid = 25; 
+        $role_assigment->userid = $id_usser;
+        $role_assigment->timemodified=$fecha->getTimestamp(); 
+        $role_assigment->modifierid=2; 
+        $role_assigment->component=null; 
+        $role_assigment->itemid =0;
+        $role_assigment->sortorder=0;
+        $newid = $DB->insert_record('role_assigment', $role_assigment);
+        return $newid;
+    }
+                    
+    protected function generate_usser_enrolment($id_usser,$id_enroll,$course){
+        $fecha=new DateTime("now");
+        $usserErollment = new stdClass();
+//        $usserErollment->status 
+        $usserErollment->enrolid =$id_enroll;
+        $usserErollment->userid=$id_usser;
+        $usserErollment->timestart =$course->startdate();
+        $usserErollment->timeend =$course->enddate();
+        $usserErollment->modifierid =2;
+        $usserErollment->timecreated =$fecha->getTimestamp();
+        $usserErollment->timemodified=$fecha->getTimestamp();
+        
+        $newuserid = $DB->insert_record('usser_enrolment', $usserErollment);
+        return $newuserid ;
+    }
+    
     /**
      * Send the result of function call to the WS client.
      *
