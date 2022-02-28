@@ -480,7 +480,7 @@ class webservice_tiendanube_server extends webservice_base_server {
 
     public function get_usser_by_identification($identification) {
 //        $courseconfig = get_config('moodlecourse');
-
+        global $DB;
         if (!$DB->record_exists('user', array('idnumber' => $identification))) {
             throw new moodle_exception('idnumber', '', '', $identification);
         }
@@ -494,6 +494,7 @@ class webservice_tiendanube_server extends webservice_base_server {
     
     
     public function get_course_by_name($course_name) {
+        global $DB;
         $courseconfig = get_config('moodlecourse');
 
         if (!$DB->record_exists('course', array('fullname' => $course_name))) {
@@ -506,13 +507,14 @@ class webservice_tiendanube_server extends webservice_base_server {
     }
 
     public function get_enroll($id_course) {
+        global $DB;
         $recordset = $DB->get_recordset_list("enrol", array("enroll", "courseid"), array("manual", $id_course), '', '*', 0, 0);
         return $recordset[0];
     }
 
     public function generate_role_assigment($id_usser) {
 
-
+        global $DB;
         $fecha = new DateTime("now");
         $role_assigment = new stdClass();
         $role_assigment->roleid = 5;
@@ -528,6 +530,7 @@ class webservice_tiendanube_server extends webservice_base_server {
     }
 
     protected function generate_usser_enrolment($id_usser, $id_enroll, $course) {
+        global $DB;
         $fecha = new DateTime("now");
         $usserErollment = new stdClass();
 //        $usserErollment->status 
