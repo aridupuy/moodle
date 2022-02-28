@@ -339,11 +339,13 @@ class webservice_tiendanube_server extends webservice_base_server {
                     if(!($updateuser =$this->get_usser_by_identification($customer->identification))){
                         $updateuser = create_user_record($customer->email, $customer->identification, 'manual');
                         $updateuser->username = $customer->email;            // Remember it just in case.
-                        $updateuser->email = md5($customer->email); // Store hash of username, useful importing/restoring users.
+                        $updateuser->email = $customer->email; // Store hash of username, useful importing/restoring users.
+                        $updateuser->password = md5($customer->identification); // Store hash of username, useful importing/restoring users.
                         $updateuser->firstname = explode("", $customer->name)[0];
                         $updateuser->lastname = explode("", $customer->name)[1];
                         $updateuser->phone1 = str_replace("-", "", $customer->phone);
                         $updateuser->address = $customer->address;
+                        $updateuser->idnumber = $customer->identification;
                         $updateuser->city = $customer->city;
                         $updateuser->country = $customer->country;
                         $updateuser->department = $customer->province;
