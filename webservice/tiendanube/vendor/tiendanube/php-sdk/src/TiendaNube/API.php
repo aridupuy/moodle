@@ -90,13 +90,9 @@ class API {
             'timeout' => 10,
             'useragent' => $this->user_agent,
         ];
-        var_dump($this->access_token);
-        var_dump($headers);
-        var_dump($data);
-        var_dump($method);
-        var_dump($options);
+        error_log($this->url . $path);
+        var_dump($this->url . $path);
         $response = $this->requests->request($this->url . $path, $headers, $data, $method, $options);
-        var_dump($response);
         $response = new API\Response($this, $response);
         var_dump($response);
         if ($response->status_code == 404){

@@ -321,7 +321,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                 //verifico que no este generado de antes.
                 if ($datos["webhook"]["id"] != null) {
                     error_log("Webhook registrado actualizando");
-                    $response = $auth->get("webhooks/" . ["webhook"]["id"]);
+                    $response = $auth->get("/webhooks/" . ["webhook"]["id"]);
                     error_log(json_encode($response));
                     if (!isset($response->body) or!isset($response->body->id)) {
                         //creo el webhook para ordenes pagadas.
@@ -341,7 +341,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                 } else {
                     try {
                         error_log("Webhook no registrado Registrando");
-                        $response = $auth->post("webhooks", json_decode('{
+                        $response = $auth->post("/webhooks", json_decode('{
                                         "url": "https://moodletest2.herokuapp.com/webservice/tiendanube/server.php", 
                                         "event" : "order/paid"
                                     }', true));
