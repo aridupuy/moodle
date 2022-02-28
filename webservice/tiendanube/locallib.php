@@ -293,7 +293,7 @@ class webservice_tiendanube_server extends webservice_base_server {
         };
         try {
             error_log(json_encode($_POST));
-            error_log(file_get_contents("//input"));
+            error_log(file_get_contents('php://input'));
             error_log(json_encode($_REQUEST));
             if(!isset($_GET["code"])){
                 die;
