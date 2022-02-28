@@ -26,10 +26,11 @@
 /**
  * NO_DEBUG_DISPLAY - disable moodle specific debug messages and any errors in output
  */
-define('NO_DEBUG_DISPLAY', true);
+//define('NO_DEBUG_DISPLAY', true);
 define('WS_SERVER', true);
 
 require('../../config.php');
+
 require_once("$CFG->dirroot/webservice/tiendanube/locallib.php");
 
 if (!webservice_protocol_is_enabled('restful')) {
@@ -40,6 +41,7 @@ if (!webservice_protocol_is_enabled('restful')) {
 }
 
 $server = new webservice_tiendanube_server(WEBSERVICE_AUTHMETHOD_PERMANENT_TOKEN);
+
 $server->run();
 die;
 
