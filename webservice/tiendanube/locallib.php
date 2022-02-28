@@ -336,20 +336,19 @@ class webservice_tiendanube_server extends webservice_base_server {
                     error_log(json_encode($product));
                     $transaction = $DB->start_delegated_transaction();
 
-                    $updateuser = create_user_record($customer->email, $customer->identification, 'manual');
-
-                    $updateuser = new stdClass();
-                    $updateuser->username = $customer->email;            // Remember it just in case.
-                    $updateuser->email = md5($customer->email); // Store hash of username, useful importing/restoring users.
-                    $updateuser->firstname = explode("", $customer->name)[0];
-                    $updateuser->lastname = explode("", $customer->name)[1];
-                    $updateuser->phone1 = str_replace("-", "", $customer->phone);
-                    $updateuser->address = $customer->address;
-                    $updateuser->city = $customer->city;
-                    $updateuser->country = $customer->country;
-                    $updateuser->department = $customer->province;
-                    user_update_user($updateuser, false, false);
-
+                    if(!($updateuser =$this->get_usser_by_identification($customer->identification))){
+                        $updateuser = create_user_record($customer->email, $customer->identification, 'manual');
+                        $updateuser->username = $customer->email;            // Remember it just in case.
+                        $updateuser->email = md5($customer->email); // Store hash of username, useful importing/restoring users.
+                        $updateuser->firstname = explode("", $customer->name)[0];
+                        $updateuser->lastname = explode("", $customer->name)[1];
+                        $updateuser->phone1 = str_replace("-", "", $customer->phone);
+                        $updateuser->address = $customer->address;
+                        $updateuser->city = $customer->city;
+                        $updateuser->country = $customer->country;
+                        $updateuser->department = $customer->province;
+                        user_update_user($updateuser, false, false);
+                    }
                     /* busco y enrrolo el usuario */
                     /* 1 tomo el curso por el nombre */
                     $course = $this->get_course_by_name($product->name);
@@ -472,6 +471,21 @@ class webservice_tiendanube_server extends webservice_base_server {
         }
     }
 
+    public function get_usser_by_identification($identification) {
+//        $courseconfig = get_config('moodlecourse');
+
+        if (!$DB->record_exists('user', array('idnumber' => $identification))) {
+            throw new moodle_exception('idnumber', '', '', $identification);
+        }
+        list($where, $params) = $DB->get_in_or_equal($identification);
+        $ussers= $DB->get_records_select('course', 'idnumber' . $where, $params, '', '*');
+        error_log(json_encode($ussers));
+        if(count($ussers)==0)
+            return false;
+        return $ussers[0];
+    }
+    
+    
     public function get_course_by_name($course_name) {
         $courseconfig = get_config('moodlecourse');
 
