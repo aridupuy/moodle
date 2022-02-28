@@ -334,11 +334,11 @@ class webservice_tiendanube_server extends webservice_base_server {
                     $customer = $order->body->customer;
                     error_log(json_encode($customer));
                     error_log(json_encode($product));
-//                    $transaction = $DB->start_delegated_transaction();
+                    $transaction = $DB->start_delegated_transaction();
 
                     $updateuser = create_user_record($customer->email, $customer->identification, 'manual');
 
-//        $updateuser = new stdClass();
+                    $updateuser = new stdClass();
                     $updateuser->username = $customer->email;            // Remember it just in case.
                     $updateuser->email = md5($customer->email); // Store hash of username, useful importing/restoring users.
                     $updateuser->firstname = explode("", $customer->name)[0];
@@ -354,7 +354,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                     /* 1 tomo el curso por el nombre */
                     $course = $this->get_course_by_name($product->name);
                     if (!$course) {
-//                        $DB->rollback_delegated_transaction($transaction);
+                        $DB->rollback_delegated_transaction($transaction);
                         error_log("Error en busqueda de cursos");
                         die();
                     }
@@ -363,7 +363,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                     /* 2 buscar enroll por "manual " e id_course */
 //                    $enroll = $this->get_enroll($id_course);
                     if (!$enroll) {
-//                        $DB->rollback_delegated_transaction($transaction);
+                        $DB->rollback_delegated_transaction($transaction);
                         error_log("Error al obtener el metodo de erolamiento.");
                         die();
                     }
@@ -379,11 +379,11 @@ class webservice_tiendanube_server extends webservice_base_server {
                     /* 4 generar usser enrolment usserid,id_course */
                     $newussererollmentid = $this->generate_usser_enrolment($updateuser->id, $id_enroll, $course);
                     if ($newussererollmentid) {
-//                        $DB->rollback_delegated_transaction($transaction);
+                        $DB->rollback_delegated_transaction($transaction);
                         error_log("Error al generar el usser erolment");
                         die();
                     }
-//                    $DB->commit_delegated_transaction($transaction);
+                    $DB->commit_delegated_transaction($transaction);
                     error_log("Usuario registrado y enrolado al curso");
                     die();
                 } catch (\Exception $e) {
