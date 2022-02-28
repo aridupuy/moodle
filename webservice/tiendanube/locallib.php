@@ -292,6 +292,14 @@ class webservice_tiendanube_server extends webservice_base_server {
             die;
         };
         try {
+            error_log(json_encode($_POST));
+            error_log(file_get_contents("//input"));
+            error_log(json_encode($_REQUEST));
+            if(!isset($_GET["code"])){
+                die;
+                exit();
+                
+            }
             /* este dato es para actualizar el token permanente de la app de tiendanube */
             if ($_GET["code"]) {
                 unlink("$CFG->dirroot . '/webservice/tiendanube/store.json'");
