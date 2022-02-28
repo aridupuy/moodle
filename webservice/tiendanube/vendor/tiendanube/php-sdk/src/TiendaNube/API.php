@@ -82,7 +82,7 @@ class API {
     
     protected function _call($method, $path, $data = null){
         $headers = [
-            'Authentication' => "bearer {$this->access_token}",
+            'Authentication' => "bearer $this->access_token",
             'Content-Type' => 'application/json',
         ];
         
@@ -91,8 +91,14 @@ class API {
             'useragent' => $this->user_agent,
         ];
         var_dump($this->access_token);
+        var_dump($headers);
+        var_dump($data);
+        var_dump($method);
+        var_dump($options);
         $response = $this->requests->request($this->url . $path, $headers, $data, $method, $options);
+        var_dump($response);
         $response = new API\Response($this, $response);
+        var_dump($response);
         if ($response->status_code == 404){
             throw new API\NotFoundException($response);
         } elseif (!in_array($response->status_code, [200, 201])){
