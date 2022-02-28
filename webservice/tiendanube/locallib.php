@@ -293,7 +293,7 @@ class webservice_tiendanube_server extends webservice_base_server {
         };
         try {
 
-            $data_entrante(json_decode(file_get_contents('php://input')));
+            $data_entrante=(json_decode(file_get_contents('php://input')));
             $auth = new TiendaNube\Auth(self::CLIENT_ID, self::CLIENT_SECRET);
             if (!isset($_GET["code"])) {
                 try {
@@ -310,6 +310,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                     die();
                     $updateuser = create_user_record($customer->email, $customer->identification, 'manual');
                     
+                    
 //        $updateuser = new stdClass();
                     $updateuser->username = $customer->email;            // Remember it just in case.
                     $updateuser->email = md5($customer->email); // Store hash of username, useful importing/restoring users.
@@ -321,6 +322,8 @@ class webservice_tiendanube_server extends webservice_base_server {
                     $updateuser->country = $customer->country;
                     $updateuser->department = $customer->province;
                     user_update_user($updateuser, false, false);
+                    
+                    
                 } catch (\Exception $e) {
                     error_log("Error en ejecucion del cobro");
                     error_log($e->getMessage());
