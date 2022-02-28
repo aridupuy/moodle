@@ -314,7 +314,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                     error_log("registrando venta");
                     error_log("obteniendo datos guardados");
                     $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'), true);
-                    error_log($datos);
+                    error_log(json_encode($datos));
                     /* aca arranco con el codigo */
                     $order_id = $data_entrante["id"];
                     error_log($data_entrante["id"]);
