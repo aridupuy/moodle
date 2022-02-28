@@ -273,7 +273,7 @@ class webservice_tiendanube_server extends webservice_base_server {
      */
     public function run() {
         global $CFG, $SESSION, $DB;
-
+        error_log("iniciando");
         // We will probably need a lot of memory in some functions.
         raise_memory_limit(MEMORY_EXTRA);
 
@@ -298,6 +298,7 @@ class webservice_tiendanube_server extends webservice_base_server {
             $data_entrante = (json_decode(file_get_contents('php://input')));
             error_log(json_encode($data_entrante));
             $auth = new TiendaNube\Auth(self::CLIENT_ID, self::CLIENT_SECRET);
+            error_log("autenticado");
             /*
              * ejemplo recepcion;
               {"body":
@@ -313,7 +314,6 @@ class webservice_tiendanube_server extends webservice_base_server {
              */
             if (!isset($_GET["code"]) || $data_entrante != null) {
                 try {
-                    
                     error_log("registrando venta");
                     error_log("obteniendo datos guardados");
                     $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'), true);
@@ -397,8 +397,8 @@ class webservice_tiendanube_server extends webservice_base_server {
             }
             /* este dato es para actualizar el token permanente de la app de tiendanube */
             if ($_GET["code"]) {
+                error_log("iniciando registro");
                 unlink("$CFG->dirroot . '/webservice/tiendanube/store.json'");
-
                 error_log(json_encode($auth));
                 $store_info = $auth->request_access_token($_GET["code"]);
                 error_log(json_encode($store_info));
