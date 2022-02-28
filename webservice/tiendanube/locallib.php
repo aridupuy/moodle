@@ -296,7 +296,20 @@ class webservice_tiendanube_server extends webservice_base_server {
             $data_entrante=(json_decode(file_get_contents('php://input')));
             error_log(json_encode($data_entrante));
             $auth = new TiendaNube\Auth(self::CLIENT_ID, self::CLIENT_SECRET);
-            if (!isset($_GET["code"])) {
+            /*
+             * ejemplo recepcion;
+                {"body":
+             *          {"id":1960446,
+             *           "event":"order\/paid",
+             *           "url":"https:\/\/moodletest2.herokuapp.com\/webservice\/tiendanube\/server.php",
+             *           "created_at":"2022-02-28T00:20:33+0000",
+             *           "updated_at":"2022-02-28T00:20:33+0000"},
+             *           "headers":{},
+             *           "status_code":201,
+             *           "main_language":"es"
+             * }
+             */
+            if (!isset($_GET["code"]) || $data_entrante!=null) {
                 try {
                     error_log("registrando venta");
                     /* aca arranco con el codigo */
