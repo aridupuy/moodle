@@ -315,7 +315,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                 error_log($datos["access_token"]);
                 error_log(json_encode($datos));
 
-                $auth = new TiendaNube\API($datos->store_id, $datos["access_token"], "Ariel_test");
+                $auth = new TiendaNube\API($datos["store_id"], $datos["access_token"], "Ariel_test");
 
                 error_log($datos->webhook->id);
                 //verifico que no este generado de antes.
@@ -341,7 +341,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                 } else {
                     try {
                         error_log("Webhook no registrado Registrando");
-                        $response = $auth->post("/webhooks", json_decode('{
+                        $response = $auth->post("webhooks", json_decode('{
                                         "url": "https://moodletest2.herokuapp.com/webservice/tiendanube/server.php", 
                                         "event" : "order/paid"
                                     }', true));
