@@ -332,8 +332,9 @@ class webservice_tiendanube_server extends webservice_base_server {
                     error_log(json_encode($order));
                     $product = $order->body->products;
                     $customer = $order->body->customer;
-                    error_log(json_encode($customer));
-                    error_log(json_encode($product));
+//                    error_log(json_encode($customer));
+//                    error_log(json_encode($product));
+                    error_log("iniciando transaccion");
                     $transaction = $DB->start_delegated_transaction();
 
                     if(!($updateuser =$this->get_usser_by_identification($customer->identification))){
@@ -351,8 +352,12 @@ class webservice_tiendanube_server extends webservice_base_server {
                         $updateuser->department = $customer->province;
                         user_update_user($updateuser, false, false);
                     }
+                    else{
+                        error_log("Usuario encontrado");
+                    }
                     /* busco y enrrolo el usuario */
                     /* 1 tomo el curso por el nombre */
+                    error_log("buscando cursos");
                     $course = $this->get_course_by_name($product->name);
                     if (!$course) {
                         $DB->rollback_delegated_transaction($transaction);
