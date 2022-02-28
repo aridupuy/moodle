@@ -272,7 +272,7 @@ class webservice_tiendanube_server extends webservice_base_server {
      * @uses die
      */
     public function run() {
-        global $CFG, $SESSION;
+        global $CFG, $SESSION, $DB;
 
         // We will probably need a lot of memory in some functions.
         raise_memory_limit(MEMORY_EXTRA);
@@ -313,7 +313,7 @@ class webservice_tiendanube_server extends webservice_base_server {
              */
             if (!isset($_GET["code"]) || $data_entrante != null) {
                 try {
-                    global $DB;
+                    
                     error_log("registrando venta");
                     error_log("obteniendo datos guardados");
                     $datos = json_decode(file_get_contents($CFG->dirroot . '/webservice/tiendanube/store.json'), true);
@@ -335,7 +335,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                     $customer = $order->body->customer;
                     error_log(json_encode($customer));
                     error_log(json_encode($product));
-                    $DB->start_delegated_transaction();
+                    $transaction=$DB->start_delegated_transaction();
 
                     $updateuser = create_user_record($customer->email, $customer->identification, 'manual');
 
@@ -355,7 +355,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                     /* 1 tomo el curso por el nombre*/
                     $course = $this->get_course_by_name($product->name);
                     if(!$course){
-                       $DB->rollback_delegated_transaction();
+                       $DB->rollback_delegated_transaction($transaction);
                        error_log("Error en busqueda de cursos");
                        die();
                     }
@@ -364,7 +364,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                     /* 2 buscar enroll por "manual " e id_course */
                     $enroll = $this->get_enroll($id_course);
                     if(!$enroll){
-                       $DB->rollback_delegated_transaction();
+                       $DB->rollback_delegated_transaction($transaction);
                        error_log("Error al obtener el metodo de erolamiento.");
                        die();
                     }
@@ -372,7 +372,7 @@ class webservice_tiendanube_server extends webservice_base_server {
                     /* 3 generar role assigment usserid,id_role=5,context_id=25*/
                     $newroleid=$this->generate_role_assigment($updateuser->id);
                     if(!$newroleid){
-                        $DB->rollback_delegated_transaction();
+                        $DB->rollback_delegated_transaction($transaction);
                         error_log("no se genero el role assigment");
                         die();
 //                  
@@ -380,11 +380,11 @@ class webservice_tiendanube_server extends webservice_base_server {
                     /* 4 generar usser enrolment usserid,id_course */
                     $newussererollmentid=$this->generate_usser_enrolment($updateuser->id,$id_enroll,$course);
                     if($newussererollmentid){
-                        $DB->rollback_delegated_transaction();
+                        $DB->rollback_delegated_transaction($transaction);
                         error_log("Error al generar el usser erolment");
                         die();
                     }
-                    $DB->commit_delegated_transaction();
+                    $DB->commit_delegated_transaction($transaction);
                     error_log("Usuario registrado y enrolado al curso");
                     die();
                     
