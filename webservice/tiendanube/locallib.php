@@ -292,18 +292,46 @@ class webservice_tiendanube_server extends webservice_base_server {
             die;
         };
         try {
-            error_log(json_encode($_POST));
-            error_log(file_get_contents('php://input'));
-            error_log(json_encode($_REQUEST));
-            if(!isset($_GET["code"])){
+
+            $data_entrante(json_decode(file_get_contents('php://input')));
+            $auth = new TiendaNube\Auth(self::CLIENT_ID, self::CLIENT_SECRET);
+            if (!isset($_GET["code"])) {
+                try {
+                    /* aca arranco con el codigo */
+                    $order_id = $data_entrante->id;
+                    $store_id = $data_entrante->store_id;
+                    $event = $data_entrante->event;
+                    $order = $auth->get("orders/$order_id");
+                    error_log(json_encode($order));
+                    $product = $order->body->products;
+                    $customer = $order->body->customer;
+                    error_log(json_encode($customer));
+                    error_log(json_encode($product));
+                    die();
+                    $updateuser = create_user_record($customer->email, $customer->identification, 'manual');
+                    
+//        $updateuser = new stdClass();
+                    $updateuser->username = $customer->email;            // Remember it just in case.
+                    $updateuser->email = md5($customer->email); // Store hash of username, useful importing/restoring users.
+                    $updateuser->firstname = explode("", $customer->name)[0];
+                    $updateuser->lastname = explode("", $customer->name)[1];
+                    $updateuser->phone1 = str_replace("-", "", $customer->phone);
+                    $updateuser->address = $customer->address;
+                    $updateuser->city = $customer->city;
+                    $updateuser->country = $customer->country;
+                    $updateuser->department = $customer->province;
+                    user_update_user($updateuser, false, false);
+                } catch (\Exception $e) {
+                    error_log("Error en ejecucion del cobro");
+                    error_log($e->getMessage());
+                    error_log($e->getTraceAsString());
+                }
                 die;
-                exit();
-                
             }
             /* este dato es para actualizar el token permanente de la app de tiendanube */
             if ($_GET["code"]) {
                 unlink("$CFG->dirroot . '/webservice/tiendanube/store.json'");
-                $auth = new TiendaNube\Auth(self::CLIENT_ID, self::CLIENT_SECRET);
+                
                 error_log(json_encode($auth));
                 $store_info = $auth->request_access_token($_GET["code"]);
                 error_log(json_encode($store_info));
@@ -375,33 +403,8 @@ class webservice_tiendanube_server extends webservice_base_server {
             error_log("Error en setup");
             error_log($e->getMessage());
             error_log($e->getTraceAsString());
+            die;
         }
-        try {
-            /* aca arranco con el codigo */
-            $order_id = $_POST["id"];
-            $store_id = $_POST["store_id"];
-            $event = $_POST["event"];
-            $response = $auth->get("orders/$order_id");
-            $product = $response->body->products;
-            $customer = $response->body->customer;
-            $updateuser = create_user_record($customer->email, $customer->identification, 'manual');
-//        $updateuser = new stdClass();
-            $updateuser->username = $customer->email;            // Remember it just in case.
-            $updateuser->email = md5($customer->email); // Store hash of username, useful importing/restoring users.
-            $updateuser->firstname = explode("", $customer->name)[0];
-            $updateuser->lastname = explode("", $customer->name)[1];
-            $updateuser->phone1 = str_replace("-", "", $customer->phone);
-            $updateuser->address = $customer->address;
-            $updateuser->city = $customer->city;
-            $updateuser->country = $customer->country;
-            $updateuser->department = $customer->province;
-            user_update_user($updateuser, false, false);
-        } catch (\Exception $e) {
-            error_log("Error en ejecucion del cobro");
-            error_log($e->getMessage());
-            error_log($e->getTraceAsString());
-        }
-        die;
     }
 
     /**
